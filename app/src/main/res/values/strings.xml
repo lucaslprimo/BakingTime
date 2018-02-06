@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Baking Time</string>
+    <string name="step_text">#%d Step - %s</string>
+    <string name="ingredient_text">%d. %d %s, %s \n\n</string>
+    <string name="index_text">%d / %d</string>
+    <string name="ingredient_label">Ingredients</string>
+    <string name="steps_label">Steps</string>
+    <string name="previous_step">Previous</string>
+    <string name="next_step">Next</string>
+    <string name="steps_index_sample">5 / 32</string>
+    <string name="step_description_sample">2. Whisk the graham cracker crumbs, 50 grams (1/4 cup) of sugar, and 1/2 teaspoon of salt together in a medium bowl. Pour the melted butter and 1 teaspoon of vanilla into the dry ingredients and stir together until evenly mixed.</string>
+
+</resources>

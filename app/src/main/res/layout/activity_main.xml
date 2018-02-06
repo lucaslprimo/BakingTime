@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center"
+        android:id="@+id/loading_recipes"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="br.com.lucaslprimo.bakingtime.ui.MainActivity"
+        android:id="@+id/recycler_view_recipes"
+        android:visibility="invisible">
+
+
+
+    </android.support.v7.widget.RecyclerView>
+
+</FrameLayout>
+
+
