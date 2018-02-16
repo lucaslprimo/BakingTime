@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.MasterStepsListActivity" />
-        <activity android:name=".ui.StepDetailsActivity"/>
+        <activity android:name=".ui.StepDetailsActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize|screenLayout|uiMode"/>
     </application>
 
 </manifest>

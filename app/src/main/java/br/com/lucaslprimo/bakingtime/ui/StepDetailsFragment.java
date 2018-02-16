@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -25,28 +24,16 @@ import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
-import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.PlaybackParameters;
-import com.google.android.exoplayer2.RenderersFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.TrackGroupArray;
-import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
-import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
-import com.google.android.exoplayer2.trackselection.TrackSelection;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
-import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
-import com.google.android.exoplayer2.upstream.BandwidthMeter;
-import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
-import com.squareup.picasso.Picasso;
 
 import br.com.lucaslprimo.bakingtime.R;
 import br.com.lucaslprimo.bakingtime.data.Step;
@@ -70,8 +57,11 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
     @BindView(R.id.index_steps) TextView mIndexSteps;
     @BindView(R.id.next_step) Button mNextButton;
     @BindView(R.id.previous_step) Button mPreviousButton;
+    @BindView(R.id.frame_player) FrameLayout mFramePlayer;
+    boolean isTwoPanel = false ;
+    boolean isLandscape = false;
+    boolean hasVideo = false;
 
-    Dialog mFullScreenDialog;
     SimpleExoPlayer mPlayer;
     Step[] mStepsList;
     int indexStep;
@@ -146,11 +136,36 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
         super.onSaveInstanceState(outState);
     }
 
-    void refreshData()
+    void refreshUi()
     {
-        releasePlayer();
+        if(isLandscape)
+        {
+            if(!hasVideo)
+            {
+                mFramePlayer.setVisibility(View.GONE);
+                showInfo();
+            }else
+            {
+                mFramePlayer.setVisibility(View.VISIBLE);
+                hideInfo();
+            }
+        }else
+        {
+            mFramePlayer.setVisibility(View.VISIBLE);
+            showInfo();
+        }
 
-        stepSelected = mStepsList[indexStep];
+    }
+
+    void hideInfo()
+    {
+        mStepDescription.setVisibility(View.GONE);
+        mNextButton.setVisibility(View.GONE);
+        mPreviousButton.setVisibility(View.GONE);
+        mIndexSteps.setVisibility(View.GONE);
+    }
+
+    void showInfo() {
 
         //Check if index is at the end or at the start to hide previous and next button when necessary
         if(indexStep == 0) {
@@ -158,21 +173,32 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
             mPreviousButton.setVisibility(View.INVISIBLE);
         }
         else
-            if(indexStep == mStepsList.length-1) {
-                mNextButton.setVisibility(View.INVISIBLE);
-                mPreviousButton.setVisibility(View.VISIBLE);
-            }else
-            {
-                mNextButton.setVisibility(View.VISIBLE);
-                mPreviousButton.setVisibility(View.VISIBLE);
-            }
+        if(indexStep >= mStepsList.length-1) {
+            mNextButton.setVisibility(View.INVISIBLE);
+            mPreviousButton.setVisibility(View.VISIBLE);
+        }else
+        {
+            mNextButton.setVisibility(View.VISIBLE);
+            mPreviousButton.setVisibility(View.VISIBLE);
+        }
+
+        mIndexSteps.setVisibility(View.VISIBLE);
+    }
+
+    void refreshData()
+    {
+        releasePlayer();
+
+        stepSelected = mStepsList[indexStep];
 
         //Step has Video
         if(stepSelected.getVideoUrl()!=null && !stepSelected.getVideoUrl().isEmpty())
         {
             videoUrl =stepSelected.getVideoUrl();
             initializePlayer();
-            mPlayerView.setVisibility(View.VISIBLE);
+            mFramePlayer.setVisibility(View.VISIBLE);
+
+            hasVideo =true;
         }else
             //Step has Image
             if(stepSelected.getThumbnailUrl()!=null && !stepSelected.getThumbnailUrl().isEmpty())
@@ -180,23 +206,27 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
                 //The API is returning .mp4 on thumbnailUrl
                 videoUrl = stepSelected.getThumbnailUrl();
                 initializePlayer();
-                mPlayerView.setVisibility(View.VISIBLE);
+                mFramePlayer.setVisibility(View.VISIBLE);
+                hasVideo =true;
 
             }else //Step has nothing but the description
             {
-                mPlayerView.setVisibility(View.INVISIBLE);
+                mFramePlayer.setVisibility(View.GONE);
+                hasVideo = false;
             }
 
         mStepDescription.setText(stepSelected.getDescription());
 
         mIndexSteps.setText(String.format(getString(R.string.index_text),indexStep,mStepsList.length-1));
 
-        if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE)
+        if(hasVideo && isLandscape)
         {
-            initFullscreenDialog();
-            openFullscreenDialog();
-        }else
-            closeFullscreenDialog();
+            enterFullscreen();
+            hideInfo();
+        }else {
+            exitFullscreen();
+            showInfo();
+        }
     }
 
     @OnClick(R.id.previous_step)
@@ -239,29 +269,6 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
             mPlayer.stop();
             mPlayer.release();
             mPlayer = null;
-        }
-    }
-
-    private void initFullscreenDialog() {
-
-        mFullScreenDialog = new Dialog(context, android.R.style.Theme_Black_NoTitleBar_Fullscreen) {
-            public void onBackPressed() {
-                super.onBackPressed();
-            }
-        };
-    }
-
-    private void openFullscreenDialog() {
-        ((ViewGroup) mPlayerView.getParent()).removeView(mPlayerView);
-        mFullScreenDialog.addContentView(mPlayerView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        mFullScreenDialog.show();
-    }
-
-    private void closeFullscreenDialog() {
-        if(mFullScreenDialog!=null) {
-            ((ViewGroup) mPlayerView.getParent()).removeView(mPlayerView);
-            ((FrameLayout) view.findViewById(R.id.frame_player)).addView(mPlayerView);
-            mFullScreenDialog.dismiss();
         }
     }
 
@@ -329,5 +336,46 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
         {
             mPlayer.setPlayWhenReady(false);
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+
+        if(!isTwoPanel) {
+            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                isLandscape = true;
+
+                if (hasVideo)
+                    enterFullscreen();
+
+            } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                isLandscape = false;
+
+                exitFullscreen();
+            }
+
+            refreshUi();
+
+        }
+    }
+
+    void enterFullscreen()
+    {
+        getActivity().getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN // hide status bar
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE);
+    }
+
+    void exitFullscreen()
+    {
+        getActivity().getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+
     }
 }

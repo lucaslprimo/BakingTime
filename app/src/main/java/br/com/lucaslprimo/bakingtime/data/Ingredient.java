@@ -87,7 +87,7 @@ public class Ingredient implements Parcelable{
         parcel.writeInt(quantity);
     }
 
-    static final Parcelable.Creator<Ingredient> CREATOR = new Parcelable.Creator<Ingredient>()
+    public static final Parcelable.Creator<Ingredient> CREATOR = new Parcelable.Creator<Ingredient>()
     {
         @Override
         public Ingredient createFromParcel(Parcel parcel) {

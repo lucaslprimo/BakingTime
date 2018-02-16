@@ -143,7 +143,7 @@ public class Recipe implements Parcelable{
 
     }
 
-    static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>()
+    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>()
     {
         @Override
         public Recipe createFromParcel(Parcel parcel) {
