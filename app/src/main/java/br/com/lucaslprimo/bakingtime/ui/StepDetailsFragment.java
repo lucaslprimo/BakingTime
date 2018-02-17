@@ -236,7 +236,8 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
             enterFullscreen();
             hideInfo();
         }else {
-            exitFullscreen();
+            if(!isTwoPanel)
+                exitFullscreen();
             showInfo();
         }
     }
