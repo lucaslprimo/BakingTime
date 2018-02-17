@@ -1,5 +1,6 @@
 package br.com.lucaslprimo.bakingtime.ui;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
@@ -64,7 +65,7 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
 
     SimpleExoPlayer mPlayer;
     Step[] mStepsList;
-    int indexStep;
+    public int indexStep;
     Step stepSelected;
     String videoUrl;
 
@@ -82,6 +83,15 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
         this.context = context;
         this.intent = this.getActivity().getIntent();
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        this.context = activity.getApplicationContext();
+        this.intent = activity.getIntent();
+    }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -102,11 +112,9 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
 
         ButterKnife.bind(this,view);
 
-        //TODO Bar title Recipe Name
-
-        if(intent.getExtras()!=null)
+        if(mStepsList==null && intent.getExtras()!=null)
         {
-            Parcelable[] parcelableArray=  intent.getExtras().getParcelableArray(StepsListFragment.EXTRA_STEPS);
+            Parcelable[] parcelableArray=  intent.getExtras().getParcelableArray(MasterStepsListActivity.EXTRA_STEPS);
             if(parcelableArray!=null)
             {
                 mStepsList = new Step[parcelableArray.length];
@@ -116,12 +124,15 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
                 }
             }
 
-            indexStep =  intent.getExtras().getInt(StepsListFragment.EXTRA_STEP_INDEX);
+            indexStep =  intent.getExtras().getInt(MasterStepsListActivity.EXTRA_STEP_INDEX);
+        }
 
-            if(mStepsList!=null)
-            {
-                refreshData();
-            }
+        refreshData();
+
+        if(isTwoPanel)
+        {
+            mNextButton.setVisibility(View.INVISIBLE);
+            mPreviousButton.setVisibility(View.INVISIBLE);
         }
 
         return view;
@@ -183,6 +194,7 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
         }
 
         mIndexSteps.setVisibility(View.VISIBLE);
+        mStepDescription.setVisibility(View.VISIBLE);
     }
 
     void refreshData()
@@ -219,7 +231,7 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
 
         mIndexSteps.setText(String.format(getString(R.string.index_text),indexStep,mStepsList.length-1));
 
-        if(hasVideo && isLandscape)
+        if(hasVideo && isLandscape && !isTwoPanel)
         {
             enterFullscreen();
             hideInfo();
@@ -344,6 +356,7 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
 
 
         if(!isTwoPanel) {
+
             if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 isLandscape = true;
 

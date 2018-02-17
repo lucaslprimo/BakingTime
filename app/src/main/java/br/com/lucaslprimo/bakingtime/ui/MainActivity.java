@@ -2,8 +2,10 @@ package br.com.lucaslprimo.bakingtime.ui;
 
 import android.content.Intent;
 import android.os.PersistableBundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity  implements NetworkUtils.Rec
 
     private final static String INSTANCE_RECIPES = "recipes_instance";
     public final static String EXTRA_RECIPE = "recipe";
+    public final static int COLUMNS_TABLET_GRID = 2;
 
     @BindView(R.id.recycler_view_recipes) RecyclerView mRecyclerView;
     @BindView(R.id.loading_recipes) ProgressBar loadingRecipes;
@@ -37,7 +40,16 @@ public class MainActivity extends AppCompatActivity  implements NetworkUtils.Rec
 
         ButterKnife.bind(this);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager layoutManager;
+
+        if(getResources().getBoolean(R.bool.isTablet))
+        {
+            layoutManager = new GridLayoutManager(this,COLUMNS_TABLET_GRID);
+        }else
+        {
+            layoutManager = new LinearLayoutManager(this);
+        }
+
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
@@ -61,7 +73,6 @@ public class MainActivity extends AppCompatActivity  implements NetworkUtils.Rec
     @Override
     public void onFinishRequest(Recipe[] recipeList) {
 
-        Timber.d("Request Finished");
         mRecipeList = recipeList;
         showData();
     }
@@ -76,8 +87,6 @@ public class MainActivity extends AppCompatActivity  implements NetworkUtils.Rec
     @Override
     public void onItemClick(Recipe recipe) {
 
-        Timber.d("Item Clicked");
-        Toast.makeText(this,recipe.getName(),Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this,MasterStepsListActivity.class);
         intent.putExtra(EXTRA_RECIPE,recipe);
         startActivity(intent);

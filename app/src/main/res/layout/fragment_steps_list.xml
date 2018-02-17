@@ -1,39 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/scroll_view"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    android:background="@drawable/background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
         android:orientation="vertical"
-        android:descendantFocusability="blocksDescendants">
+        android:padding="10dp">
 
         <TextView
+            style="@style/TextButtonsAndTitles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/ingredient_label">
-        </TextView>
+            android:layout_marginBottom="10dp"
+            android:text="@string/ingredient_label"
+            android:textAppearance="@style/TextButtonsAndTitles"></TextView>
 
         <TextView
             android:id="@+id/txt_ingredients"
+            style="@style/TextParagraphs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp" />
+            android:padding="16dp"
+            android:textAppearance="@style/TextParagraphs" />
 
         <TextView
+            style="@style/TextButtonsAndTitles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/steps_label"/>
+            android:layout_marginBottom="10dp"
+            android:text="@string/steps_label"
+            android:textAppearance="@style/TextButtonsAndTitles" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_steps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:descendantFocusability="blocksDescendants"/>
+            android:descendantFocusability="blocksDescendants" />
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

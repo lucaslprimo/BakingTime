@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_margin">16dp</dimen>
+
+    <dimen name="title_size">20sp</dimen>
+    <dimen name="paragraph_size">16sp</dimen>
+
+    <dimen name="padding_button">5dp</dimen>
+    <dimen name="width_button">200dp</dimen>
 </resources>

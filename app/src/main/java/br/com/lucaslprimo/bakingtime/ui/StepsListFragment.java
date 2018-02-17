@@ -1,11 +1,13 @@
 package br.com.lucaslprimo.bakingtime.ui;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
 import android.app.Fragment;
+import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,6 +23,7 @@ import br.com.lucaslprimo.bakingtime.data.Recipe;
 import br.com.lucaslprimo.bakingtime.data.Step;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 import static br.com.lucaslprimo.bakingtime.ui.MainActivity.EXTRA_RECIPE;
 
@@ -28,7 +31,7 @@ import static br.com.lucaslprimo.bakingtime.ui.MainActivity.EXTRA_RECIPE;
  * Created by Lucas Primo on 01-Feb-18.
  */
 
-public class StepsListFragment extends Fragment implements StepListAdapter.OnClickListener{
+public class StepsListFragment extends Fragment {
 
     Intent intent;
     Context context;
@@ -39,10 +42,6 @@ public class StepsListFragment extends Fragment implements StepListAdapter.OnCli
     @BindView(R.id.txt_ingredients) TextView txtIngredients;
     @BindView(R.id.scroll_view) NestedScrollView mScrollView;
 
-    private static final String INSTANCE_STEPS = "instance_steps";
-    public static final String EXTRA_STEPS = "steps";
-    public static final String EXTRA_STEP_INDEX = "step_index";
-
     public StepsListFragment(){
 
     }
@@ -50,9 +49,15 @@ public class StepsListFragment extends Fragment implements StepListAdapter.OnCli
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         this.context = context;
         this.intent = this.getActivity().getIntent();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.context = activity.getApplicationContext();
+        this.intent = activity.getIntent();
     }
 
     @Override
@@ -62,14 +67,13 @@ public class StepsListFragment extends Fragment implements StepListAdapter.OnCli
 
         ButterKnife.bind(this,view);
 
-        mStepAdapter = new StepListAdapter(this);
+        mStepAdapter = new StepListAdapter((StepListAdapter.OnClickListener)getActivity());
         mRecyclerViewSteps.setAdapter(mStepAdapter);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         mRecyclerViewSteps.setLayoutManager(layoutManager);
         mRecyclerViewSteps.setHasFixedSize(true);
         mRecyclerViewSteps.setNestedScrollingEnabled(false);
-
 
         if(intent.getExtras()!=null) {
             mRecipe = intent.getExtras().getParcelable(EXTRA_RECIPE);
@@ -94,16 +98,5 @@ public class StepsListFragment extends Fragment implements StepListAdapter.OnCli
         }
 
         return view;
-    }
-
-    @Override
-    public void onItemClick(int position) {
-
-        Intent intent = new Intent(getActivity(),StepDetailsActivity.class);
-
-        intent.putExtra(EXTRA_STEPS,mStepsList);
-        intent.putExtra(EXTRA_STEP_INDEX,position);
-
-        getActivity().startActivity(intent);
     }
 }

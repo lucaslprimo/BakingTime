@@ -69,7 +69,12 @@ public class StepListAdapter extends RecyclerView.Adapter<StepListAdapter.StepVi
 
         void bind(int position)
         {
-            txtStep.setText(String.format(itemView.getContext().getString(R.string.step_text),position,mStepList[position].getShortDescription()));
+            if(position==0) {
+                txtStep.setText(mStepList[position].getShortDescription());
+            }else
+            {
+                txtStep.setText(String.format(itemView.getContext().getString(R.string.step_text), position, mStepList[position].getShortDescription()));
+            }
         }
 
         @Override

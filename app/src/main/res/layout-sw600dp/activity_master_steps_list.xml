@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:context="br.com.lucaslprimo.bakingtime.ui.MasterStepsListActivity"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:id="@+id/linear_layout">
+
+    <fragment
+        android:name="br.com.lucaslprimo.bakingtime.ui.StepsListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        tools:context="br.com.lucaslprimo.bakingtime.ui.MasterStepsListActivity"
+        android:id="@+id/list_fragment">
+
+    </fragment>
+
+    <FrameLayout
+        android:id="@+id/frame_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"></FrameLayout>
+
+</LinearLayout>
+
