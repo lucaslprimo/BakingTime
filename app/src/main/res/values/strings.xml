@@ -9,12 +9,9 @@
     <string name="next_step">Next</string>
     <string name="steps_index_sample">5 / 32</string>
     <string name="step_description_sample">2. Whisk the graham cracker crumbs, 50 grams (1/4 cup) of sugar, and 1/2 teaspoon of salt together in a medium bowl. Pour the melted butter and 1 teaspoon of vanilla into the dry ingredients and stir together until evenly mixed.</string>
-    <string name="appwidget_text">EXAMPLE</string>
-    <string name="add_widget">Add widget</string>
+
 
     <string name="text_label_widget">Choose a recipe to see the ingredients at your home screen widget:</string>
-
-    <string name="text_widget_setup">Loading...</string>
 
     <string name="title_widget_setup">Widget Setup</string>
 
@@ -27,5 +24,10 @@
 
     <string name="label_content_desc_wifi">Wifi symbol with an exclamation signal</string>
     <string name="label_content_desc_error">Exclamation signal</string>
+
+
+    <string name="content_description_previous">Back to the start Button</string>
+    <string name="content_description_play">Play Button</string>
+    <string name="content_description_pause">Pause Button</string>
 
 </resources>

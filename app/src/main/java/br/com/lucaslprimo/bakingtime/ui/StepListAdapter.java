@@ -1,6 +1,5 @@
 package br.com.lucaslprimo.bakingtime.ui;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import br.com.lucaslprimo.bakingtime.R;
-import br.com.lucaslprimo.bakingtime.data.Recipe;
 import br.com.lucaslprimo.bakingtime.data.Step;
 import butterknife.BindView;
 import butterknife.ButterKnife;

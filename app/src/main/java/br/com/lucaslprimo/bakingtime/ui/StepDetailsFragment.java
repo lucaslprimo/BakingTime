@@ -1,15 +1,12 @@
 package br.com.lucaslprimo.bakingtime.ui;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.media.session.PlaybackState;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
@@ -39,7 +36,6 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
 import br.com.lucaslprimo.bakingtime.R;
 import br.com.lucaslprimo.bakingtime.data.Step;
-import br.com.lucaslprimo.bakingtime.utils.NetworkUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

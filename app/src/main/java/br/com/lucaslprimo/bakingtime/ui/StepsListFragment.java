@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.app.Fragment;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import br.com.lucaslprimo.bakingtime.R;
 import br.com.lucaslprimo.bakingtime.data.Ingredient;
@@ -23,7 +21,6 @@ import br.com.lucaslprimo.bakingtime.data.Recipe;
 import br.com.lucaslprimo.bakingtime.data.Step;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import timber.log.Timber;
 
 import static br.com.lucaslprimo.bakingtime.ui.MainActivity.EXTRA_RECIPE;
 

@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.os.PersistableBundle;
 
 import android.support.annotation.NonNull;
@@ -93,7 +94,8 @@ public class MainActivity extends AppCompatActivity  implements NetworkUtils.Rec
                 widgetId = getIntent().getExtras().getInt(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
                 textChooseRecipe.setVisibility(View.VISIBLE);
 
-                getSupportActionBar().setTitle(getString(R.string.title_widget_setup));
+                if(getSupportActionBar()!=null)
+                    getSupportActionBar().setTitle(getString(R.string.title_widget_setup));
             }else
             {
                 textChooseRecipe.setVisibility(View.GONE);
@@ -118,7 +120,15 @@ public class MainActivity extends AppCompatActivity  implements NetworkUtils.Rec
 
         if(savedInstanceState != null && savedInstanceState.containsKey(INSTANCE_RECIPES))
         {
-            mRecipeList = (Recipe[]) savedInstanceState.getParcelableArray(INSTANCE_RECIPES);
+            Parcelable[] parcelables = savedInstanceState.getParcelableArray(INSTANCE_RECIPES);
+
+            if(parcelables!=null) {
+                mRecipeList = new Recipe[parcelables.length];
+
+                for (int i = 0; i < parcelables.length; i++)
+                    mRecipeList[i] = (Recipe) parcelables[i];
+            }
+
             showData();
         }else {
 

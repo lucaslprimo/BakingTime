@@ -2,14 +2,9 @@ package br.com.lucaslprimo.bakingtime.ui;
 
 import android.content.Intent;
 import android.os.PersistableBundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
-import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import br.com.lucaslprimo.bakingtime.MyIdlingResource;
 import br.com.lucaslprimo.bakingtime.R;
 import br.com.lucaslprimo.bakingtime.data.Recipe;
 
@@ -30,7 +25,8 @@ public class MasterStepsListActivity extends AppCompatActivity implements StepLi
 
         if(getIntent().getExtras()!=null) {
             Recipe mRecipe = getIntent().getExtras().getParcelable(EXTRA_RECIPE);
-            getSupportActionBar().setTitle(mRecipe.getName());
+            if(getSupportActionBar()!=null && mRecipe!=null)
+                getSupportActionBar().setTitle(mRecipe.getName());
         }
 
         if(savedInstanceState !=null && savedInstanceState.containsKey(INSTANCE_STEP_INDEX))
@@ -65,7 +61,8 @@ public class MasterStepsListActivity extends AppCompatActivity implements StepLi
             {
                 StepDetailsFragment detailsFragment = new StepDetailsFragment();
                 detailsFragment.isTwoPanel=true;
-                detailsFragment.mStepsList = mRecipe.getStepList();
+                if(mRecipe!=null)
+                    detailsFragment.mStepsList = mRecipe.getStepList();
                 detailsFragment.indexStep = position;
 
                 if(findViewById(R.id.frame_player)==null) {

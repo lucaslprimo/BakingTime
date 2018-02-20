@@ -19,7 +19,7 @@
             android:layout_marginBottom="10dp"
             android:text="@string/ingredient_label"
             android:textAppearance="@style/TextTitles"
-            android:id="@+id/label_ingredients"></TextView>
+            android:id="@+id/label_ingredients" />
 
         <TextView
             android:id="@+id/txt_ingredients"

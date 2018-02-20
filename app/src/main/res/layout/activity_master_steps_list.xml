@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.lucaslprimo.bakingtime.ui.MasterStepsListActivity">
+    tools:context="br.com.lucaslprimo.bakingtime.ui.MasterStepsListActivity"
+    android:id="@+id/fragment_steps_list">
 
 </fragment>
