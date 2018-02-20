@@ -2,9 +2,26 @@
 <resources>
     <dimen name="text_margin">16dp</dimen>
 
-    <dimen name="title_size">20sp</dimen>
+    <dimen name="title_size">30sp</dimen>
+    <dimen name="step_text_size">18sp</dimen>
+
     <dimen name="paragraph_size">16sp</dimen>
+
+    <dimen name="button_text_size">18sp</dimen>
 
     <dimen name="padding_button">5dp</dimen>
     <dimen name="width_button">200dp</dimen>
+
+    <dimen name="paragraph_size_widget">10sp</dimen>
+
+    <dimen name="title_size_widget">16sp</dimen>
+
+
+    <dimen name="alert_icon_size">80dp</dimen>
+
+    <!--
+Refer to App Widget Documentation for margin information
+http://developer.android.com/guide/topics/appwidgets/index.html#CreatingLayout
+    -->
+    <dimen name="widget_margin">8dp</dimen>
 </resources>

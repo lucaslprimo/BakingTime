@@ -1,0 +1,31 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_widget"
+    android:padding="@dimen/widget_margin"
+    android:orientation="vertical"
+    android:id="@+id/layout_widget">
+
+    <TextView
+        android:id="@+id/recipe_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAppearance="@style/TextButtons" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/ingredient_label"
+        android:textAppearance="@style/TitleWidgetIngredients" />
+
+    <TextView
+        android:id="@+id/text_ingredients"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAppearance="@style/TextWidgetIngredients" />
+
+</LinearLayout>

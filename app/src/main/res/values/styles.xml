@@ -11,21 +11,38 @@
 
 
     <style name="mButtonStyle">
-        <item name="android:textAppearance">@style/TextButtonsAndTitles</item>
+        <item name="android:textAppearance">@style/TextButtons</item>
         <item name="android:background">@drawable/button_orange</item>
         <item name="android:layout_width">@dimen/width_button</item>
 
     </style>
 
-    <style name="TextButtonsAndTitles" parent="TextAppearance.AppCompat">
+    <style name="TextTitles" parent="TextAppearance.AppCompat">
         <item name="android:fontFamily">cursive</item>
         <item name="android:textSize">@dimen/title_size</item>
+    </style>
 
+    <style name="TextSteps" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">@dimen/step_text_size</item>
+    </style>
+
+    <style name="TextButtons" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">cursive</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
     </style>
 
     <style name="TextParagraphs" parent="TextAppearance.AppCompat">
-        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:textSize">@dimen/paragraph_size</item>
+    </style>
+
+    <style name="TextWidgetIngredients" parent="TextParagraphs">
+        <item name="android:textSize">@dimen/paragraph_size_widget</item>
+    </style>
+
+    <style name="TitleWidgetIngredients" parent="TextTitles">
+        <item name="android:textSize">@dimen/title_size_widget</item>
     </style>
 
 </resources>

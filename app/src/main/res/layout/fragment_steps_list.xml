@@ -13,12 +13,13 @@
         android:padding="10dp">
 
         <TextView
-            style="@style/TextButtonsAndTitles"
+            style="@style/TextTitles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="@string/ingredient_label"
-            android:textAppearance="@style/TextButtonsAndTitles"></TextView>
+            android:textAppearance="@style/TextTitles"
+            android:id="@+id/label_ingredients"></TextView>
 
         <TextView
             android:id="@+id/txt_ingredients"
@@ -29,18 +30,20 @@
             android:textAppearance="@style/TextParagraphs" />
 
         <TextView
-            style="@style/TextButtonsAndTitles"
+            style="@style/TextTitles"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
             android:text="@string/steps_label"
-            android:textAppearance="@style/TextButtonsAndTitles" />
+            android:textAppearance="@style/TextTitles" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_steps"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:descendantFocusability="blocksDescendants" />
+
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

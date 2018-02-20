@@ -1,27 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@drawable/background"
+    android:orientation="vertical">
 
-    <ProgressBar
-        android:id="@+id/loading_recipes"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_recipes"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/text_widget_choose_recipe"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="invisible"
-        tools:context="br.com.lucaslprimo.bakingtime.ui.MainActivity">
+        android:padding="10dp"
+        android:text="@string/text_label_widget"
+        android:textAppearance="@style/TextSteps"
+        android:visibility="gone" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/error_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:alpha="0.5"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
+            <ImageView
+                android:id="@+id/iv_error"
+                android:layout_width="@dimen/alert_icon_size"
+                android:layout_height="@dimen/alert_icon_size"
+                android:layout_gravity="center"
+                android:contentDescription="@string/label_content_desc_wifi"
+                android:src="@drawable/ic_perm_scan_wifi_black_24px" />
+
+            <TextView
+                android:id="@+id/tv_error_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="16dp"
+                android:text="@string/error_no_internet"
+                android:textAlignment="center"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/loading_recipes"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_recipes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="invisible"
+            tools:context="br.com.lucaslprimo.bakingtime.ui.MainActivity">
 
 
-    </android.support.v7.widget.RecyclerView>
+        </android.support.v7.widget.RecyclerView>
 
-</FrameLayout>
+    </FrameLayout>
+
+</LinearLayout>
 
 

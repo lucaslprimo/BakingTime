@@ -1,9 +1,15 @@
 package br.com.lucaslprimo.bakingtime.ui;
 
 import android.content.Intent;
+import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import br.com.lucaslprimo.bakingtime.MyIdlingResource;
 import br.com.lucaslprimo.bakingtime.R;
 import br.com.lucaslprimo.bakingtime.data.Recipe;
 
@@ -13,6 +19,9 @@ public class MasterStepsListActivity extends AppCompatActivity implements StepLi
 
     public static final String EXTRA_STEPS = "steps";
     public static final String EXTRA_STEP_INDEX = "step_index";
+    public static final String INSTANCE_STEP_INDEX = "instance_step_index";
+
+    int stepIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +32,31 @@ public class MasterStepsListActivity extends AppCompatActivity implements StepLi
             Recipe mRecipe = getIntent().getExtras().getParcelable(EXTRA_RECIPE);
             getSupportActionBar().setTitle(mRecipe.getName());
         }
+
+        if(savedInstanceState !=null && savedInstanceState.containsKey(INSTANCE_STEP_INDEX))
+        {
+            stepIndex = savedInstanceState.getInt(INSTANCE_STEP_INDEX);
+            onItemClick(stepIndex);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        outState.putInt(INSTANCE_STEP_INDEX,stepIndex);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        outState.putInt(INSTANCE_STEP_INDEX,stepIndex);
+        super.onSaveInstanceState(outState, outPersistentState);
     }
 
     @Override
     public void onItemClick(int position) {
+
+        stepIndex = position;
 
         if(getIntent().getExtras()!=null) {
             Recipe mRecipe = getIntent().getExtras().getParcelable(EXTRA_RECIPE);

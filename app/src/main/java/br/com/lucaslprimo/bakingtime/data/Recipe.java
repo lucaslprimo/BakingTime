@@ -112,7 +112,7 @@ public class Recipe implements Parcelable{
     }
 
     //Parcelable implementation
-    private Recipe(Parcel in)
+    public Recipe(Parcel in)
     {
         this.id = in.readInt();
         this.name = in.readString();

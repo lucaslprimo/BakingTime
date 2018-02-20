@@ -82,18 +82,7 @@ public class StepsListFragment extends Fragment {
                 mStepsList = mRecipe.getStepList();
                 mStepAdapter.setStepList(mStepsList);
 
-                txtIngredients.setText("");
-                int index =1;
-                for (Ingredient ingredient:mRecipe.getIngredientList()) {
-                    txtIngredients.append(
-                            String.format(
-                                    context.getString(R.string.ingredient_text),
-                                    index,
-                                    ingredient.getQuantity(),
-                                    ingredient.getMeasure(),
-                                    ingredient.getIngredient()));
-                    index++;
-                }
+                txtIngredients.setText(Ingredient.getStringListIngredients(mRecipe.getIngredientList(),context));
             }
         }
 

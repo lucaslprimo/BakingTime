@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,7 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 
 import br.com.lucaslprimo.bakingtime.R;
 import br.com.lucaslprimo.bakingtime.data.Step;
+import br.com.lucaslprimo.bakingtime.utils.NetworkUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -71,6 +73,8 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
 
     View view;
 
+    private Snackbar mSnackBar;
+
     int currentWindow = 0;
     long playbackPosition = 0;
 
@@ -92,21 +96,12 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
         this.intent = activity.getIntent();
     }
 
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        if(savedInstanceState!=null && savedInstanceState.containsKey(INSTANCE_CURRENT_WINDOW))
-        {
-            currentWindow = savedInstanceState.getInt(INSTANCE_CURRENT_WINDOW);
-            playbackPosition = savedInstanceState.getLong(INSTANCE_PLAYBACK_POSITION);
-        }
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        //mSnackBar = Snackbar.make(mFramePlayer,R.string.label_snack_text,Snackbar.LENGTH_INDEFINITE);
+        //mSnackBar.setActionTextColor(context.getResources().getColor(R.color.colorPrimaryDark));
 
         view = inflater.inflate(R.layout.fragment_step_details,container,false);
 
@@ -127,7 +122,8 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
             indexStep =  intent.getExtras().getInt(MasterStepsListActivity.EXTRA_STEP_INDEX);
         }
 
-        refreshData();
+        if(mStepsList!=null)
+            refreshData();
 
         if(isTwoPanel)
         {
@@ -142,8 +138,7 @@ public class StepDetailsFragment extends Fragment implements ExoPlayer.EventList
     public void onSaveInstanceState(Bundle outState) {
 
         mPlayer.setPlayWhenReady(false);
-        outState.putInt(INSTANCE_CURRENT_WINDOW,mPlayer.getCurrentWindowIndex());
-        outState.putLong(INSTANCE_PLAYBACK_POSITION,mPlayer.getCurrentPosition());
+
         super.onSaveInstanceState(outState);
     }
 

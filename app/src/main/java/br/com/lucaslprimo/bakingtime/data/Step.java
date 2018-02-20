@@ -85,7 +85,7 @@ public class Step implements Parcelable{
     }
 
     //Parcelable implementation
-    private Step(Parcel in)
+    public Step(Parcel in)
     {
         this.id = in.readInt();
         this.description = in.readString();

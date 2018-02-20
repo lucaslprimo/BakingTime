@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialKeyguardLayout="@layout/ingredients_widget"
+    android:initialLayout="@layout/ingredients_widget"
+    android:minHeight="250dp"
+    android:minWidth="250dp"
+    android:minResizeHeight="80dp"
+    android:minResizeWidth="80dp"
+    android:previewImage="@mipmap/ic_launcher"
+    android:resizeMode="horizontal|vertical"
+    android:updatePeriodMillis="86400000"
+    android:widgetCategory="home_screen"
+    android:configure="br.com.lucaslprimo.bakingtime.ui.MainActivity"></appwidget-provider>

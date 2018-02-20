@@ -1,6 +1,8 @@
 package br.com.lucaslprimo.bakingtime.utils;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -13,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 
+import br.com.lucaslprimo.bakingtime.MyIdlingResource;
 import br.com.lucaslprimo.bakingtime.data.Recipe;
 
 /**
@@ -23,8 +26,13 @@ public class NetworkUtils {
 
     private static final String URL_RECIPES = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
-    public static void requestRecipes(Context context, final RecipesCallback recipesCallback)
+    public static void requestRecipes(Context context, final RecipesCallback recipesCallback, final MyIdlingResource idlingResource)
     {
+        if(idlingResource != null)
+        {
+            idlingResource.setIdleState(false);
+        }
+
         RequestQueue queue = Volley.newRequestQueue(context);
 
         // Request a string response from the provided URL.
@@ -32,6 +40,9 @@ public class NetworkUtils {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
+                        if(idlingResource!=null)
+                            idlingResource.setIdleState(true);
 
                         if(!response.isEmpty())
                         {
@@ -44,6 +55,7 @@ public class NetworkUtils {
                                 {
                                     recipeList[i] = Recipe.fromJson(jsonArray.getJSONObject(i));
                                 }
+
 
                                 recipesCallback.onFinishRequest(recipeList);
 
@@ -67,5 +79,15 @@ public class NetworkUtils {
 
     public interface RecipesCallback{
         void onFinishRequest(Recipe[] recipeList);
+    }
+
+    public static boolean isOnline(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if(cm!=null) {
+            NetworkInfo netInfo = cm.getActiveNetworkInfo();
+            return netInfo != null && netInfo.isConnectedOrConnecting();
+        }else
+            return false;
     }
 }

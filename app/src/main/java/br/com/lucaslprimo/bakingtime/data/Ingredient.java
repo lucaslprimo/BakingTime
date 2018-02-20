@@ -1,10 +1,13 @@
 package br.com.lucaslprimo.bakingtime.data;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import br.com.lucaslprimo.bakingtime.R;
 
 /**
  * Created by Lucas Primo on 01-Feb-18.
@@ -62,8 +65,27 @@ public class Ingredient implements Parcelable{
         return  ingredient;
     }
 
+
+    public static String getStringListIngredients(Ingredient[] ingredientsList,Context context)
+    {
+        StringBuilder ingredientsBuilder = new StringBuilder();
+
+        int index =1;
+        for (Ingredient item:ingredientsList) {
+            ingredientsBuilder.append(String.format(
+                    context.getString(R.string.ingredient_text),
+                    index,
+                    item.getQuantity(),
+                    item.getMeasure(),
+                    item.getIngredient()));
+            index++;
+        }
+
+        return ingredientsBuilder.toString();
+    }
+
     //Parcelable implementation
-    private Ingredient(Parcel in)
+    public Ingredient(Parcel in)
     {
         this.ingredient = in.readString();
         this.measure = in.readString();
