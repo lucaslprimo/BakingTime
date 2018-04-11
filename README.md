@@ -19,3 +19,7 @@ The json example source is: https://d17h27t6h515a5.cloudfront.net/topher/2017/Ma
  
  - Master/Detail pattern developed for Tablets
  
+ ## Check it on Google Play
+ 
+ https://play.google.com/store/apps/details?id=br.com.lucaslprimo.bakingtime
+ 
